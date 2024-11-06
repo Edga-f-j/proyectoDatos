@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Asignacion de recursos</h1>
+
+        <div class="tab-menu">
+            <button onclick="showSection('salones')">Salones</button>
+            <button onclick="showSection('profesores')">profesores</button>
+            <button onclick="showSection('cursos')">cursos</button>
+            <button onclick="showSection('roles')">Roles de apoyo</button>
+        </div>
+
+        <!-- tabla -->
+         <div id="salones" class="tab-content">
+            <h2> Salones Disponible</h2>
+
+            <p> salon 1, salon 2, salon 3</p>
+         </div>
+
+        <div id="profesores" class="tab-content">
+            <h2>profesores</h2>
+
+            <p>profesor1, profesor2</p>
+        </div>
+
+        <div id="cursos" class="tab-content">
+            <h2>Cursos Disponibles</h2>
+            <!-- Lista de cursos -->
+            <p>Curso 1, Curso 2, etc.</p>
+        </div>
+        
+        <div id="roles" class="tab-content">
+            <h2>Roles de Apoyo</h2>
+            <!-- Lista de roles de apoyo -->
+            <p>Rol 1, Rol 2, etc.</p>
+        </div>
+
+
+        <!-- Opciones de horario y día -->
+        <div class="schedule-options">
+            <!-- <label for="start-time">Hora de inicio:</label>
+            <input type="time" id="start-time" min="07:00" max="22:00" step="3600" required>
+
+            <label for="end-time">Hora de fin:</label>
+            <input type="time" id="end-time" min="07:00" max="22:00" step="3600" required> -->
+
+            <label for="start-time">Hora de inicio:</label>
+            <select id="start-time" required>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+            </select>
+
+            <label for="end-time">Hora de fin:</label>
+            <select id="end-time" required>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+            </select>
+
+
+            <label for="day">Día de la semana:</label>
+            <select id="day" required>
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miércoles">Miércoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+            </select>
+        </div>
+
+        <button onclick="agregar()">Agregar</button>
+
+       
+    </div>
+
+
+
+
+    <div class="schedule-container">
+        <!-- Fila superior: Lunes, Martes, Miércoles -->
+        <div class="row">
+            <div class="day-header">Lunes</div>
+            <div class="day-header">Martes</div>
+            <div class="day-header">Miércoles</div>
+        </div>
+        <div class="row">
+            <div class="day-column" id="monday"></div>
+            <div class="day-column" id="tuesday"></div>
+            <div class="day-column" id="wednesday"></div>
+        </div>
+        
+        <!-- Fila inferior: Jueves, Viernes -->
+        <div class="row">
+            <div class="day-header">Jueves</div>
+            <div class="day-header">Viernes</div>
+        </div>
+        <div class="row">
+            <div class="day-column" id="thursday"></div>
+            <div class="day-column" id="friday"></div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

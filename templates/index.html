@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Salones y Cursos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Gestión de Salones y Cursos</h2>
+    
+    <!-- Tabla de Salones -->
+    <div class="mt-4">
+        <h4>Disponibilidad de Salones</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID del Salón</th>
+                    <th>Capacidad</th>
+                    <th>Equipos</th>
+                    <th>Disponibilidad</th>
+                </tr>
+            </thead>
+            <tbody id="salonesTable">
+                <!-- Aquí se llenarán los datos de los salones -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulario para Asignación de Curso a Salón -->
+    <div class="mt-4">
+        <h4>Asignar Curso a Salón</h4>
+        <form id="asignacionForm">
+            <div class="form-group">
+                <label for="cursoSelect">Seleccione un Curso:</label>
+                <select class="form-control" id="cursoSelect">
+                    <!-- Aquí se llenarán los cursos -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bloqueSelect">Seleccione un Bloque de Tiempo:</label>
+                <select class="form-control" id="bloqueSelect">
+                    <!-- Aquí se llenarán los bloques de tiempo -->
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="asignarCurso()">Asignar Curso</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript para simular los datos -->
+<script>
+    // Simulación de datos de salones, cursos y bloques de tiempo
+    const salones = [
+        { id: 1, capacidad: 30, equipos: ["proyector", "computadora"], disponibilidad: "Disponible" },
+        { id: 2, capacidad: 20, equipos: ["computadora"], disponibilidad: "Ocupado 09:00-11:00" },
+        // Agrega más salones según necesites
+    ];
+    
+    const cursos = [
+        { id: 1, nombre: "Matemáticas Básicas" },
+        { id: 2, nombre: "Introducción a la Computación" },
+        { id: 3, nombre: "Historia Universal" }
+    ];
+
+    const bloquesDeTiempo = ["07:00-09:00", "09:00-11:00", "11:00-13:00"];
+
+// Cargar los datos de los salones desde la API de Flask
+function cargarSalones() {
+    fetch('/api/salones')
+        .then(response => response.json())
+        .then(data => {
+            const salonesTable = document.getElementById("salonesTable");
+            data.forEach(salon => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${salon.id}</td>
+                    <td>${salon.capacidad}</td>
+                    <td>${salon.equipos.join(", ")}</td>
+                    <td>${salon.disponibilidad}</td>  <!-- Mostrará la disponibilidad como texto -->
+                `;
+                salonesTable.appendChild(row);
+            });
+        });
+}
+
+
+// Cargar los datos de los cursos desde la API de Flask
+function cargarCursos() {
+    fetch('/api/cursos')
+        .then(response => response.json())
+        .then(data => {
+            const cursoSelect = document.getElementById("cursoSelect");
+            data.forEach(curso => {
+                const option = document.createElement("option");
+                option.value = curso.id;
+                option.text = curso.nombre;
+                cursoSelect.add(option);
+            });
+        });
+}
+
+// Cargar los bloques de tiempo desde la API de Flask
+function cargarBloquesDeTiempo() {
+    fetch('/api/bloques')
+        .then(response => response.json())
+        .then(data => {
+            const bloqueSelect = document.getElementById("bloqueSelect");
+            data.forEach(bloque => {
+                const option = document.createElement("option");
+                option.value = bloque;
+                option.text = bloque;
+                bloqueSelect.add(option);
+            });
+        });
+}
+
+// Función para asignar un curso a un salón
+function asignarCurso() {
+    const cursoId = document.getElementById("cursoSelect").value;
+    const bloque = document.getElementById("bloqueSelect").value;
+    fetch('/api/asignar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ curso_id: parseInt(cursoId), bloque: bloque })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        location.reload();  // Recarga la página para ver los cambios
+    });
+}
+
+
+    // Cargar los datos al cargar la página
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarSalones();
+        cargarCursos();
+        cargarBloquesDeTiempo();
+    });
+</script>
+
+</body>
+</html>
